@@ -6,9 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint '**/*.{ts,tsx}'",
-    "format": "prettier 'src/**/*.{ts,tsx,json,css,md}' --write",
-    "format:check": "prettier 'src/**/*.{ts,tsx,json,css,md}' --check"
+    "lint": "eslint src/**/*.{ts,tsx}",
+    "format": "prettier src/**/*.{ts,tsx,json,css,md} --write",
+    "format:check": "prettier src/**/*.{ts,tsx,json,css,md} --check"
     "preview": "vite preview",
     "prepare": "husky && husky install",
     "test": "vitest run",
