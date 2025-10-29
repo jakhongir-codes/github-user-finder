@@ -83,14 +83,6 @@ npm run lint
 npm run format
 ```
 
-### Example scripts in package.json:
-
-```bash
-"scripts": {
-  "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
-  "format": "prettier --write 'src/**/*.{ts,tsx}'"
-}
-```
 
 ### Husky + lint-staged Setup
 
