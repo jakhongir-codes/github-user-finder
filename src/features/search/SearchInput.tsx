@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { Box, Toolbar } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import { Box, Toolbar, Button } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
-import { setRepositories, setUser, setError, setLoading } from '../../stores/features';
+import { styled, alpha } from '@mui/material/styles';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { githubClient } from '../../api/index';
-import { debounce } from '../../utils/debounce';
+import { setRepositories, setUser, setError, setLoading } from '../../stores/features';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -33,43 +33,42 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SEARCH_DELAY_MILLISECONDS = 250;
-
 export default function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
+
   const dispatch = useDispatch();
 
-  const handleSearchGithubUsername = debounce((value: string) => {
-    setSearchTerm(value);
-
-    fetchUsers();
-  }, SEARCH_DELAY_MILLISECONDS);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleSearchGithubUsername(event.target.value);
-  };
-
   const fetchUsers = async () => {
+    if (!searchTerm.trim()) {
+      return;
+    }
+
     try {
-      if (!searchTerm.length) {
-        return;
-      }
       dispatch(setLoading());
       const user = await githubClient.get(`${searchTerm}`);
+
       const repositories = await githubClient.get(`${searchTerm.toLowerCase()}/repos`);
+
       dispatch(setRepositories(repositories.data));
       dispatch(setUser(user.data));
     } catch (error: any) {
-      dispatch(setError(error?.response?.data.message));
+      dispatch(setError(error?.response?.data?.message || 'Something went wrong'));
     } finally {
       dispatch(setLoading());
     }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchUsers();
   };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Toolbar>
         <Box
+          component="form"
+          onSubmit={handleSubmit}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -82,10 +81,21 @@ export default function SearchInput() {
             <StyledInputBase
               placeholder="Search GitHub user…"
               value={searchTerm}
-              onChange={handleChange}
+              onChange={(e) => setSearchTerm(e.target.value)}
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{
+              backgroundColor: 'white',
+              color: 'black',
+              '&:hover': { backgroundColor: '#f0f0f0' },
+            }}
+          >
+            Search
+          </Button>
         </Box>
       </Toolbar>
     </Box>

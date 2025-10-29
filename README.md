@@ -1,75 +1,93 @@
-# React + TypeScript + Vite
+# Github User Finder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Find users and their repositories by entering their github username
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## React Compiler
+- **Frontend Framework:** React
+- **Build Tool:** Vite
+- **Language:** TypeScript
+- **Linting:** ESLint (`@typescript-eslint`)
+- **Formatting:** Prettier
+- **Git Hooks:** Husky + lint-staged
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+root/
+├─ src/ # Source code (TS/TSX files)
+├─ .husky/ # Husky git hooks
+├─ .eslintrc.js # ESLint configuration
+├─ .prettierrc # Prettier configuration
+├─ package.json
+└─ ...
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 2. Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a .env file in the root directory and add your environment-specific variables. Example:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+VITE_GITHUB_TOKEN=your_github_token
 ```
 
+## Getting Started
 
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run the project
+
+```bash
+npm run dev
+```
+
+## ESLint & Prettier
+
+This project uses ESLint and Prettier to maintain consistent code style.
+
+### Lint all TS/TSX files:
+
+```bash
+npm run lint
+```
+
+### Format all TS/TSX files:
+
+```bash
+npm run format
+```
+
+### Example scripts in package.json:
+
+```bash
+"scripts": {
+  "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
+  "format": "prettier --write 'src/**/*.{ts,tsx}'"
+}
+```
+
+### Husky + lint-staged Setup
+
+Husky ensures that linting and formatting run automatically on staged files before committing.
+
+#### 1. Install Husky & lint-staged
+
+`bash npm install --save-dev husky lint-staged`
+
+#### 2. Enable Husky
+
+`bash npm run prepare`
+
+#### 3. Add pre-commit hook
+
+````bash npx husky set .husky/pre-commit "npx lint-staged"
+chmod +x .husky/pre-commit```
+````
