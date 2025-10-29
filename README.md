@@ -29,7 +29,7 @@ root/
 
 ## 2. Environment Variables
 
-Create a .env file in the root directory and add your environment-specific variables. Example:
+Create a .env file with your github token so that you can exceed github's rate-limiting which is 60 per hour
 
 ```bash
 VITE_GITHUB_TOKEN=your_github_token
