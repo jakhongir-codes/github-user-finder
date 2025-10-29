@@ -7,6 +7,8 @@ function App() {
   useEffect(() => {
     const nums = [1, 2, 34];
 
+    let qw;
+
     if (true) {
       return;
     }
