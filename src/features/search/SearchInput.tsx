@@ -36,6 +36,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
 
+  const [submittedSearchTerm, setSubmitedSearchTerm] = useState('');
+
   const dispatch = useDispatch();
 
   const fetchUsers = async () => {
@@ -60,6 +62,10 @@ export default function SearchInput() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (searchTerm === submittedSearchTerm) {
+      return;
+    }
+    setSubmitedSearchTerm(searchTerm);
     fetchUsers();
   };
 
