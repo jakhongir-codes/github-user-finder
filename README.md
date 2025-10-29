@@ -49,6 +49,24 @@ npm install
 npm run dev
 ```
 
+## Unit Testing with Vitest
+
+### This project uses Vitest to test utilities and other non-UI logic.
+
+#### 1. Install Vitest
+
+`bash npm install --save-dev vitest @types/node`
+
+#### 2. Run following commands
+
+```bash
+npm run test → Run all unit tests once.
+
+npm run test:watch → Run in watch mode for development.
+
+npm run test:coverage → Generate coverage report.
+```
+
 ## ESLint & Prettier
 
 This project uses ESLint and Prettier to maintain consistent code style.
